@@ -6,11 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Position {
+public final class Position {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 }
