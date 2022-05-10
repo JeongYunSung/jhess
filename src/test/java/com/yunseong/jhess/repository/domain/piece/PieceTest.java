@@ -1,6 +1,7 @@
 package com.yunseong.jhess.repository.domain.piece;
 
 import com.yunseong.jhess.repository.domain.module.Position;
+import com.yunseong.jhess.repository.domain.piece.event.EventType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,5 +65,24 @@ class PieceTest {
                 assertEquals(king.getPosition().getY(), 1);
             }
         );
+    }
+    
+    @Test
+    void 체스말_생성_이벤트_테스트() {
+        // Arrange
+        Piece pawn = new Pawn(new Position(0, 0));
+        pawn.addEventListener(EventType.CREATED, e -> {
+            Piece piece = e.getPiece();
+            piece.setLength(5);
+        });
+        pawn.addEventListener(EventType.MOVED, e -> {
+            System.out.println("MOVED");
+        });
+        // Act
+        pawn.create();
+        pawn.move(new Position(4, 4));
+        // Assert
+        assertEquals(4, pawn.getPosition().getX());
+        assertEquals(4, pawn.getPosition().getY());
     }
 }

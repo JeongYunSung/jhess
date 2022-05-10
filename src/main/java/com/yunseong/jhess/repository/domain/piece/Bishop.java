@@ -17,13 +17,13 @@ public class Bishop extends Piece {
     };
 
     public Bishop(Position position) {
-        super(position);
+        super("비숍", 10, position);
     }
 
     @Override
     public MoveStrategy moveStrategies(Position position) {
         return new CompositeMoveStrategy(Arrays.asList(
                 new DirectionMoveStrategy(this.directions, super.getPosition(), position),
-                new LengthMoveStrategy(10, super.getPosition(), position)));
+                new LengthMoveStrategy(super.getLength(), super.getPosition(), position)));
     }
 }
