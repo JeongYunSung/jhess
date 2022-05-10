@@ -1,4 +1,4 @@
-package com.yunseong.jhess.repository.domain.api;
+package com.yunseong.jhess.repository.domain.module;
 
 import lombok.Getter;
 

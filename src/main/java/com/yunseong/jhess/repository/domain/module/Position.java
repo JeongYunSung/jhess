@@ -1,9 +1,7 @@
-package com.yunseong.jhess.repository.domain.api;
+package com.yunseong.jhess.repository.domain.module;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor

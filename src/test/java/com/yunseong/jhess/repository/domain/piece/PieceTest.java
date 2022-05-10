@@ -1,6 +1,6 @@
 package com.yunseong.jhess.repository.domain.piece;
 
-import com.yunseong.jhess.repository.domain.api.Position;
+import com.yunseong.jhess.repository.domain.module.Position;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
