@@ -1,4 +1,11 @@
 package com.yunseong.jhess.repository.domain.game;
 
-public class Board {
+import com.yunseong.jhess.repository.domain.module.Position;
+import com.yunseong.jhess.repository.domain.piece.Item;
+
+public interface Board {
+
+    Position getSize();
+
+    Item getTarget(Position position);
 }

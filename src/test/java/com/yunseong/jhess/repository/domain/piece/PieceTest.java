@@ -2,7 +2,10 @@ package com.yunseong.jhess.repository.domain.piece;
 
 import com.yunseong.jhess.repository.domain.module.Position;
 import com.yunseong.jhess.repository.domain.piece.event.EventType;
+import com.yunseong.jhess.repository.domain.piece.event.PieceCreatedEvent;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 class PieceTest {
@@ -19,6 +22,13 @@ class PieceTest {
         Piece[] bishops = { new Bishop(new Position(2, 0)), new Bishop(new Position(5, 0)) };
         Piece queen = new Queen(new Position(3, 0));
         Piece king = new King(new Position(4, 0));
+
+        Arrays.stream(pawns).forEach(Piece::create);
+        Arrays.stream(rooks).forEach(Piece::create);
+        Arrays.stream(knights).forEach(Piece::create);
+        Arrays.stream(bishops).forEach(Piece::create);
+        queen.create();
+        king.create();
         // Act
         boolean pawn1_move = pawns[0].move(new Position(10, 0));
         boolean pawn2_move = pawns[1].move(new Position(1, 5));
@@ -34,7 +44,7 @@ class PieceTest {
 
         boolean bishop1_move = bishops[0].move(new Position(1, 0));
         boolean bishop2_move = bishops[0].move(new Position(9, 9));
-        boolean bishop3_move = bishops[1].move(new Position(3, 2));
+        boolean bishop3_move = bishops[1].move(new Position(1, 4));
 
         boolean queen1_move = queen.move(new Position(10, 10));
         boolean queen2_move = queen.move(new Position(6, 3));
@@ -54,7 +64,7 @@ class PieceTest {
                 assertEquals(rooks[1].getPosition().getX(), 6);
             }, () -> assertFalse(bishop1_move, "Exception"), () -> assertFalse(bishop2_move, "Exception"), () -> {
                 assertTrue(bishop3_move, "Exception");
-                assertEquals(bishops[1].getPosition().getX(), 3);
+                assertEquals(bishops[1].getPosition().getX(), 1);
             }, () -> assertFalse(queen1_move, "Exception"), () -> {
                 assertTrue(queen2_move, "Exception");
                 assertEquals(queen.getPosition().getX(), 6);
@@ -72,8 +82,8 @@ class PieceTest {
         // Arrange
         Piece pawn = new Pawn(new Position(0, 0));
         pawn.addEventListener(EventType.CREATED, e -> {
-            Piece piece = e.getPiece();
-            piece.setLength(5);
+            Pawn piece = (Pawn)e.getTarget();
+            piece.setDistance(new Position(4, 4));
         });
         pawn.addEventListener(EventType.MOVED, e -> {
             System.out.println("MOVED");

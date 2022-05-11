@@ -19,13 +19,13 @@ public class Knight extends Piece {
     };
 
     public Knight(Position position) {
-        super("나이트", 2, position);
+        super("나이트", position);
     }
 
     @Override
-    public MoveStrategy moveStrategies(Position position) {
+    protected MoveStrategy moveStrategies(Position position) {
         return new CompositeMoveStrategy(Arrays.asList(
                 new DirectionMoveStrategy(this.directions, super.getPosition(), position),
-                new LengthMoveStrategy(super.getLength(), super.getPosition(), position)));
+                new LengthMoveStrategy(2, super.getPosition(), position)));
     }
 }

@@ -10,18 +10,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@Getter
-public abstract class Piece {
+public abstract class Piece implements Item {
 
+    @Getter
     private final String name;
-
-    private int length;
+    @Getter
     private Position position;
+    @Getter
     private PieceSate pieceSate;
     private final Map<EventType, Consumer<Event>> events;
-    public Piece(String name, int length, Position position) {
+    public Piece(String name, Position position) {
         this.name = name;
-        this.length = length;
         this.position = position;
         this.pieceSate = PieceSate.INITIALIZED;
         this.events = new HashMap<>();
@@ -45,27 +44,22 @@ public abstract class Piece {
         return true;
     }
 
-    public void destroy() {
+    public void addEventListener(EventType eventType, Consumer<Event> event) {
+        this.events.put(eventType, event);
+    }
+
+    private void destroy() {
         if(this.pieceSate != PieceSate.CREATED) throw new AlreadyDestroyedPieceException(this);
 
         this.pieceSate = PieceSate.DESTROYED;
 
         notifyEvent(EventType.DESTROYED, new PieceDestroyedEvent(this));
     }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public void addEventListener(EventType eventType, Consumer<Event> event) {
-        this.events.put(eventType, event);
-    }
-
     private void notifyEvent(EventType eventType, Event event) {
         if(this.events.containsKey(eventType)) {
             this.events.get(eventType).accept(event);
         }
     }
 
-    public abstract MoveStrategy moveStrategies(Position position);
+    protected abstract MoveStrategy moveStrategies(Position position);
 }

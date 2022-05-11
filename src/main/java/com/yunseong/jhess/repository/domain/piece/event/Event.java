@@ -4,5 +4,5 @@ import com.yunseong.jhess.repository.domain.piece.Piece;
 
 public interface Event {
 
-    Piece getPiece();
+    Piece getTarget();
 }
