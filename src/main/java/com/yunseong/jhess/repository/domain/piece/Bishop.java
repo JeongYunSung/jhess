@@ -1,5 +1,6 @@
 package com.yunseong.jhess.repository.domain.piece;
 
+import com.yunseong.jhess.repository.domain.game.Board;
 import com.yunseong.jhess.repository.domain.module.Direction;
 import com.yunseong.jhess.repository.domain.module.Position;
 import com.yunseong.jhess.repository.domain.piece.strategy.*;
@@ -13,14 +14,16 @@ public class Bishop extends Piece {
             Direction.LEFT_DOWN, Direction.RIGHT_DOWN
     };
 
-    public Bishop(Position position) {
-        super("비숍", position);
+    public Bishop(Board board, Position position) {
+        super("비숍", board, position);
     }
 
     @Override
     protected MoveStrategy moveStrategies(Position position) {
         return new CompositeMoveStrategy(Arrays.asList(
+                new WallNotMoveStrategy(super.getBoard(), position),
                 new DirectionMoveStrategy(this.directions, super.getPosition(), position),
-                new DistanceMoveStrategy(new Position(8, 8), super.getPosition(), position)));
+                new DistanceMoveStrategy(new Position(8, 8), super.getPosition(), position),
+                new DontJumpStrategy(super.getBoard(), super.getPosition(), position)));
     }
 }

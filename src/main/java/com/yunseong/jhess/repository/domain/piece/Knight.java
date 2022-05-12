@@ -1,11 +1,9 @@
 package com.yunseong.jhess.repository.domain.piece;
 
+import com.yunseong.jhess.repository.domain.game.Board;
 import com.yunseong.jhess.repository.domain.module.Direction;
 import com.yunseong.jhess.repository.domain.module.Position;
-import com.yunseong.jhess.repository.domain.piece.strategy.CompositeMoveStrategy;
-import com.yunseong.jhess.repository.domain.piece.strategy.DirectionMoveStrategy;
-import com.yunseong.jhess.repository.domain.piece.strategy.LengthMoveStrategy;
-import com.yunseong.jhess.repository.domain.piece.strategy.MoveStrategy;
+import com.yunseong.jhess.repository.domain.piece.strategy.*;
 
 import java.util.Arrays;
 
@@ -18,13 +16,14 @@ public class Knight extends Piece {
             Direction.UP_UP_LEFT, Direction.DOWN_DOWN_LEFT,
     };
 
-    public Knight(Position position) {
-        super("나이트", position);
+    public Knight(Board board, Position position) {
+        super("나이트", board, position);
     }
 
     @Override
     protected MoveStrategy moveStrategies(Position position) {
         return new CompositeMoveStrategy(Arrays.asList(
+                new WallNotMoveStrategy(super.getBoard(), position),
                 new DirectionMoveStrategy(this.directions, super.getPosition(), position),
                 new LengthMoveStrategy(2, super.getPosition(), position)));
     }
