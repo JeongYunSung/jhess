@@ -1,5 +1,6 @@
 package com.yunseong.jhess.repository.domain.piece;
 
+import com.yunseong.jhess.repository.domain.game.Board;
 import com.yunseong.jhess.repository.domain.module.Position;
 import com.yunseong.jhess.repository.domain.piece.event.*;
 import com.yunseong.jhess.repository.domain.piece.exception.AlreadyDestroyedPieceException;
@@ -15,12 +16,15 @@ public abstract class Piece implements Item {
     @Getter
     private final String name;
     @Getter
+    private final Board board;
+    @Getter
     private Position position;
     @Getter
     private PieceSate pieceSate;
     private final Map<EventType, Consumer<Event>> events;
-    public Piece(String name, Position position) {
+    public Piece(String name, Board board, Position position) {
         this.name = name;
+        this.board = board;
         this.position = position;
         this.pieceSate = PieceSate.INITIALIZED;
         this.events = new HashMap<>();
@@ -32,6 +36,7 @@ public abstract class Piece implements Item {
         notifyEvent(EventType.CREATED, new PieceCreatedEvent(this));
     }
 
+    @Override
     public boolean move(Position position) {
         if(this.pieceSate != PieceSate.CREATED) throw new AlreadyDestroyedPieceException(this);
 

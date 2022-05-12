@@ -2,15 +2,16 @@ package com.yunseong.jhess.repository.domain.piece.strategy;
 
 import com.yunseong.jhess.repository.domain.game.Board;
 import com.yunseong.jhess.repository.domain.module.Position;
+import lombok.AllArgsConstructor;
 
-public class WallMoveStrategy implements MoveStrategy {
+@AllArgsConstructor
+public class WallNotMoveStrategy implements MoveStrategy {
 
     private Board board;
-    private Position position;
     private Position target;
 
     @Override
     public boolean canMove() {
-        return false;
+        return this.board.getSize().getX() > this.target.getX() || this.board.getSize().getY() > this.target.getY();
     }
 }
