@@ -24,7 +24,7 @@ public abstract class Piece implements Item {
     private Position position;
     @Getter
     private PieceSate state;
-    private final Map<EventType, Consumer<PieceEvent>> events;
+    private final Map<EventType, Consumer<Event<?>>> events;
     public Piece(String name, Board board, Color color, Position position) {
         this.name = name;
         this.board = board;
@@ -53,7 +53,7 @@ public abstract class Piece implements Item {
         return true;
     }
 
-    public void addEventListener(EventType eventType, Consumer<PieceEvent> event) {
+    public void addEventListener(EventType eventType, Consumer<Event<?>> event) {
         this.events.put(eventType, event);
     }
 

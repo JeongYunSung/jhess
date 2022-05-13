@@ -1,6 +1,6 @@
 package com.yunseong.jhess.repository.domain.piece.event;
 
-public enum EventType {
+public interface Event<T> {
 
-    CREATED, DESTROYED, MOVED
+    T getTarget();
 }

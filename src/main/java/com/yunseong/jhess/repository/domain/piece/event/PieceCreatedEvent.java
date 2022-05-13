@@ -9,7 +9,7 @@ public class PieceCreatedEvent implements PieceEvent {
 
     private PieceResponse pieceResponse;
     @Override
-    public PieceResponse getPiece() {
+    public PieceResponse getTarget() {
         return this.pieceResponse;
     }
 }

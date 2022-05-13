@@ -51,8 +51,24 @@ public class ChessBoard implements Board {
         }
     }
 
+    @Override
+    public Item getItem(Position position) {
+        if(position.getX() > this.getPosition().getX() || position.getY() > this.getPosition().getY()) throw new OutOfBoardIndexException(position);
+
+        Item origin = this.board[position.getY()][position.getX()];
+        if(origin instanceof EmptyItem) throw new NotExistItemException(position);
+
+        return origin;
+    }
+
+    @Override
     public void process() {
         this.state = BoardState.PROCEEDING;
+    }
+
+    @Override
+    public void finish() {
+        this.state = BoardState.FINISHED;
     }
 
     @Override
@@ -62,10 +78,7 @@ public class ChessBoard implements Board {
 
     @Override
     public void move(Position position, Position target) {
-        if(position.getX() > this.getPosition().getX() || position.getY() > this.getPosition().getY()) throw new OutOfBoardIndexException(position);
-
-        Item origin = this.board[position.getY()][position.getX()];
-        if(origin instanceof EmptyItem) throw new NotExistItemException(position);
+        Item origin = this.getItem(this.position);
 
         Item temp = this.board[target.getY()][target.getX()];
         if(!(temp instanceof EmptyItem)) ((Piece)temp).destroy();

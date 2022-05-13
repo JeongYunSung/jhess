@@ -1,14 +1,13 @@
 package com.yunseong.jhess.repository.domain.piece;
 
 import com.yunseong.jhess.repository.domain.game.Board;
-import com.yunseong.jhess.repository.domain.game.ChessBoard;
 import com.yunseong.jhess.repository.domain.game.EmptyBoard;
 import com.yunseong.jhess.repository.domain.module.Color;
 import com.yunseong.jhess.repository.domain.module.Position;
+import com.yunseong.jhess.repository.domain.piece.event.Event;
 import com.yunseong.jhess.repository.domain.piece.event.EventType;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
