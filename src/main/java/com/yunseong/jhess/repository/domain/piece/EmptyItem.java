@@ -8,8 +8,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class EmptyItem implements Item {
 
-    private Position position;
-
     @Override
     public boolean move(Position position) {
         return false;

@@ -10,9 +10,9 @@ import java.util.Arrays;
 @AllArgsConstructor
 public class DirectionMoveStrategy implements MoveStrategy {
 
-    private Direction[] directions;
-    private Position position;
-    private Position target;
+    private final Direction[] directions;
+    private final Position position;
+    private final Position target;
 
     @Override
     public boolean canMove() {

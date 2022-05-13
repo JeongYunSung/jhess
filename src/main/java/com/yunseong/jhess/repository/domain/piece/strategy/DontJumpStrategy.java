@@ -9,9 +9,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class DontJumpStrategy implements MoveStrategy {
 
-    private Board board;
-    private Position position;
-    private Position target;
+    private final Board board;
+    private final Position position;
+    private final Position target;
 
     @Override
     public boolean canMove() {

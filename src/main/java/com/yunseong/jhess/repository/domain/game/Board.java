@@ -6,5 +6,7 @@ public interface Board {
 
     Position getSize();
 
+    void move(Position position, Position target);
+
     boolean isExistItem(Position position);
 }

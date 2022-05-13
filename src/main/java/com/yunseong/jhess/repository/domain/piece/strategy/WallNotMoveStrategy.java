@@ -7,8 +7,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class WallNotMoveStrategy implements MoveStrategy {
 
-    private Board board;
-    private Position target;
+    private final Board board;
+    private final Position target;
 
     @Override
     public boolean canMove() {

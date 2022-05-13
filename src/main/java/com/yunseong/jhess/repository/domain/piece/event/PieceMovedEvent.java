@@ -1,16 +1,16 @@
 package com.yunseong.jhess.repository.domain.piece.event;
 
 import com.yunseong.jhess.repository.domain.piece.Piece;
+import com.yunseong.jhess.repository.domain.piece.PieceResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public class PieceMovedEvent implements Event {
+public class PieceMovedEvent implements PieceEvent {
 
-    private Piece piece;
-
+    private PieceResponse pieceResponse;
     @Override
-    public Piece getTarget() {
-        return this.piece;
+    public PieceResponse getPiece() {
+        return this.pieceResponse;
     }
 }

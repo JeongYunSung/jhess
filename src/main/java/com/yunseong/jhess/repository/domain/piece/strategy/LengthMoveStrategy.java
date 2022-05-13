@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class LengthMoveStrategy implements MoveStrategy {
 
-    private int length;
-    private Position position;
-    private Position target;
+    private final int length;
+    private final Position position;
+    private final Position target;
 
     @Override
     public boolean canMove() {

@@ -14,6 +14,10 @@ public class EmptyBoard implements Board {
     }
 
     @Override
+    public void move(Position position, Position target) {
+    }
+
+    @Override
     public boolean isExistItem(Position position) {
         return false;
     }

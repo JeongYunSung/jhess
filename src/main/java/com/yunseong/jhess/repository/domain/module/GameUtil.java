@@ -2,9 +2,9 @@ package com.yunseong.jhess.repository.domain.module;
 
 public class GameUtil {
 
-    public static Direction getDirection(Position position1, Position position2) {
-        final int x = position2.getX() - position1.getX();
-        final int y = position2.getY() - position1.getY();
+    public static Direction getDirection(Position position, Position target) {
+        final int x = target.getX() - position.getX();
+        final int y = target.getY() - position.getY();
 
         final int gcd = getGcd(x, y);
 

@@ -3,10 +3,12 @@ package com.yunseong.jhess.repository.domain.piece;
 import com.yunseong.jhess.repository.domain.game.Board;
 import com.yunseong.jhess.repository.domain.game.ChessBoard;
 import com.yunseong.jhess.repository.domain.game.EmptyBoard;
+import com.yunseong.jhess.repository.domain.module.Color;
 import com.yunseong.jhess.repository.domain.module.Position;
 import com.yunseong.jhess.repository.domain.piece.event.EventType;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,14 +19,16 @@ class PieceTest {
         // Arrange
         Board board = new EmptyBoard(new Position(8, 8));
         Piece[] pawns = {
-                new Pawn(board, new Position(0, 1)), new Pawn(board, new Position(1, 1)), new Pawn(board, new Position(2, 1)), new Pawn(board, new Position(3, 1)),
-                new Pawn(board, new Position(4, 1)), new Pawn(board, new Position(5, 1)), new Pawn(board, new Position(6, 1)), new Pawn(board, new Position(7, 1))
+                new Pawn(board, Color.BLACK, new Position(0, 1)), new Pawn(board, Color.BLACK, new Position(1, 1))
+                , new Pawn(board, Color.BLACK, new Position(2, 1)), new Pawn(board, Color.BLACK, new Position(3, 1)),
+                new Pawn(board, Color.BLACK, new Position(4, 1)), new Pawn(board, Color.BLACK, new Position(5, 1))
+                , new Pawn(board, Color.BLACK, new Position(6, 1)), new Pawn(board, Color.BLACK, new Position(7, 1))
         };
-        Piece[] rooks = { new Rook(board, new Position(0, 0)), new Rook(board, new Position(0, 7)) };
-        Piece[] knights = { new Knight(board, new Position(1, 0)), new Knight(board, new Position(6, 0)) };
-        Piece[] bishops = { new Bishop(board, new Position(2, 0)), new Bishop(board, new Position(5, 0)) };
-        Piece queen = new Queen(board, new Position(3, 0));
-        Piece king = new King(board, new Position(4, 0));
+        Piece[] rooks = { new Rook(board, Color.BLACK, new Position(0, 0)), new Rook(board, Color.BLACK, new Position(0, 7)) };
+        Piece[] knights = { new Knight(board, Color.BLACK, new Position(1, 0)), new Knight(board, Color.BLACK, new Position(6, 0)) };
+        Piece[] bishops = { new Bishop(board, Color.BLACK, new Position(2, 0)), new Bishop(board, Color.BLACK, new Position(5, 0)) };
+        Piece queen = new Queen(board, Color.BLACK, new Position(3, 0));
+        Piece king = new King(board, Color.BLACK, new Position(4, 0));
 
         Arrays.stream(pawns).forEach(Piece::create);
         Arrays.stream(rooks).forEach(Piece::create);
@@ -84,7 +88,7 @@ class PieceTest {
     void 체스말_생성_이벤트_테스트() {
         // Arrange
         String[] message = new String[1];
-        Piece pawn = new Pawn(new EmptyBoard(new Position(8, 8)), new Position(0, 0));
+        Piece pawn = new Pawn(new EmptyBoard(new Position(8, 8)), Color.BLACK, new Position(0, 0));
         pawn.addEventListener(EventType.MOVED, e -> {
             message[0] = "MOVED";
         });
