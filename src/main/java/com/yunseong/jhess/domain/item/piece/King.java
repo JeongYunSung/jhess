@@ -1,9 +1,11 @@
 package com.yunseong.jhess.domain.item.piece;
 
 import com.yunseong.jhess.domain.board.Board;
+import com.yunseong.jhess.domain.board.ChessBoard;
 import com.yunseong.jhess.domain.common.TeamColor;
 import com.yunseong.jhess.domain.common.Direction;
 import com.yunseong.jhess.domain.common.Position;
+import com.yunseong.jhess.domain.item.EventType;
 import com.yunseong.jhess.domain.item.MoveStrategy;
 import com.yunseong.jhess.domain.item.piece.strategy.*;
 
@@ -20,6 +22,7 @@ public class King extends Piece {
 
     public King(Board board, TeamColor color, Position position) {
         super("킹", board, color, position);
+        super.addEventListener(EventType.DESTROYED, e -> ((ChessBoard)super.getBoard()).finish(super.getTeam()));
     }
 
     @Override
@@ -28,7 +31,6 @@ public class King extends Piece {
                 new WallNotMoveStrategy(super.getBoard(), position),
                 new OverlapMoveStrategy(super.getBoard(), super.getPosition(), position),
                 new DirectionMoveStrategy(this.directions, super.getPosition(), super.getTeam(), position),
-                new DistanceMoveStrategy(new Position(1, 1), super.getPosition(), position),
-                new DontJumpStrategy(super.getBoard(), super.getPosition(), position)));
+                new DistanceMoveStrategy(new Position(1, 1), super.getPosition(), position)));
     }
 }

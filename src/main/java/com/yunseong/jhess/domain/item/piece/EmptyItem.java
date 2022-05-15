@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 @Getter
 @AllArgsConstructor
-public class EmptyItem implements Item<EmptyItem> {
+public class EmptyItem implements Item {
     @Override
     public Position getPosition() {
         return new Position(0, 0);
@@ -21,9 +21,5 @@ public class EmptyItem implements Item<EmptyItem> {
     @Override
     public TeamColor getTeam() {
         return TeamColor.BLACK;
-    }
-
-    @Override
-    public void addEventListener(EventType eventType, Consumer<Event<EmptyItem>> event) {
     }
 }

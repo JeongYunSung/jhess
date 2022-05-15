@@ -5,11 +5,9 @@ import com.yunseong.jhess.domain.common.TeamColor;
 
 import java.util.function.Consumer;
 
-public interface Item<T> {
+public interface Item {
 
     Position getPosition();
 
     TeamColor getTeam();
-
-    void addEventListener(EventType eventType, Consumer<Event<T>> event);
 }

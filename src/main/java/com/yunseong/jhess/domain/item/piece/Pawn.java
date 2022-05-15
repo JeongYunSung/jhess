@@ -15,6 +15,10 @@ public class Pawn extends Piece {
             Direction.UP
     };
 
+    private final Direction[] attackDirections = new Direction[] {
+            Direction.LEFT_UP, Direction.RIGHT_UP
+    };
+
     public Pawn(Board board, TeamColor color, Position position) {
         super("폰", board, color, position);
     }
@@ -23,16 +27,21 @@ public class Pawn extends Piece {
     protected MoveStrategy moveStrategies(Position position) {
         Position distance;
         if(this.isNotFirst) {
-            distance = new Position(0, 1);
+            distance = new Position(1, 1);
         }else {
             distance = new Position(0, 2);
             this.isNotFirst = true;
         }
         return new OptionalMoveStrategy(new CompositeMoveStrategy(Arrays.asList(
                     new WallNotMoveStrategy(super.getBoard(), position),
-                    new DistanceMoveStrategy(distance, super.getPosition(), position),
-                    new DontJumpStrategy(super.getBoard(), super.getPosition(), position))),
-                Arrays.asList(new DirectionMoveStrategy(this.directions, super.getPosition(), super.getTeam(), position),
-                        new PawnAttackMoveStrategy(super.getBoard(), super.getPosition(), position)));
+                    new OverlapMoveStrategy(super.getBoard(), super.getPosition(), position),
+                    new DistanceMoveStrategy(distance, super.getPosition(), position))),
+                Arrays.asList(
+                        new CompositeMoveStrategy(Arrays.asList(
+                            new DirectionMoveStrategy(this.directions, super.getPosition(), super.getTeam(), position),
+                            new ExistPieceMoveStrategy(super.getBoard(), super.getPosition(), position, false))),
+                        new CompositeMoveStrategy(Arrays.asList(
+                                new DirectionMoveStrategy(this.attackDirections, super.getPosition(), super.getTeam(), position),
+                                new ExistPieceMoveStrategy(super.getBoard(), super.getPosition(), position, true)))));
     }
 }

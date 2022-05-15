@@ -114,15 +114,22 @@ class PieceTest {
     @Test
     void 폰_공격_테스트() {
         // Arrange
-        Board board = new TestPieceBoard(new Position(4, 4));
+        Board board = new TestPieceBoard(new Position(5, 5));
         board.addItem(new Pawn(board, TeamColor.BLACK, new Position(0, 1)));
-        Pawn target = new Pawn(board, TeamColor.WHITE, new Position(0, 2));
-        board.addItem(target);
+        Pawn target1 = new Pawn(board, TeamColor.WHITE, new Position(0, 2));
+        board.addItem(target1);
+        board.addItem(new Pawn(board, TeamColor.BLACK, new Position(1, 1)));
+        Pawn target2 = new Pawn(board, TeamColor.WHITE, new Position(2, 4));
+        board.addItem(target2);
         // Act
-        board.move(new Position(1, 1), new Position(0, 2));
+        board.move(new Position(0, 1), new Position(0, 2));
+        board.move(new Position(1, 1), new Position(1,  3));
+        board.move(new Position(1, 3), new Position(2, 4));
         // Assert
-        assertTrue(board.isExistItem(new Position(2, 3)));
-        assertEquals(TeamColor.BLACK, board.getItem(new Position(2, 3)).getTeam());
-        assertEquals(PieceSate.DESTROYED, target.getState());
+        assertTrue(board.isExistItem(new Position(0, 1)));
+
+        assertTrue(board.isExistItem(new Position(2, 4)));
+        assertEquals(TeamColor.BLACK, board.getItem(new Position(2, 4)).getTeam());
+        assertEquals(PieceSate.DESTROYED, target2.getState());
     }
 }

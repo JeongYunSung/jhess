@@ -4,6 +4,7 @@ import com.yunseong.jhess.domain.common.Position;
 import com.yunseong.jhess.domain.common.TeamColor;
 import com.yunseong.jhess.domain.item.Item;
 import com.yunseong.jhess.domain.item.piece.*;
+import com.yunseong.jhess.exception.DifferentTurnException;
 import com.yunseong.jhess.exception.DontMoveException;
 import com.yunseong.jhess.exception.NotExistItemException;
 import com.yunseong.jhess.exception.OutOfBoardIndexException;
@@ -14,7 +15,7 @@ import java.util.Random;
 @Getter
 public class ChessBoard implements Board {
 
-    private final Item<?>[][] board;
+    private final Item[][] board;
 
     private final Position position;
 
@@ -22,10 +23,12 @@ public class ChessBoard implements Board {
 
     private TeamColor turn;
 
+    private TeamColor winner;
+
     public ChessBoard() {
         this.position = new Position(8, 8);
         this.board = new Item[this.position.getY()][this.position.getX()];
-        this.state = BoardState.WAITING;
+        this.state = BoardState.PROCEEDING;
         this.turn = TeamColor.valueOf(new Random().nextInt(2));
         this.init();
     }
@@ -54,32 +57,26 @@ public class ChessBoard implements Board {
     }
 
     @Override
-    public Item<?> getItem(Position position) {
+    public Item getItem(Position position) {
+        if(this.state != BoardState.PROCEEDING) throw new IllegalStateException("이미 종료된 게임입니다.");
+
         if(position.getX() > this.getPosition().getX() || position.getY() > this.getPosition().getY()) throw new OutOfBoardIndexException(position);
 
-        Item<?> origin = this.board[position.getY()][position.getX()];
+        Item origin = this.board[position.getY()][position.getX()];
         if(origin instanceof EmptyItem) throw new NotExistItemException(position);
 
         return origin;
     }
 
     @Override
-    public boolean addItem(Item<?> item) {
+    public boolean addItem(Item item) {
+        if(this.state != BoardState.PROCEEDING) throw new IllegalStateException("이미 종료된 게임입니다.");
+
         if(this.isExistItem(item.getPosition())) return false;
 
         this.board[item.getPosition().getY()][item.getPosition().getX()] = item;
 
         return true;
-    }
-
-    @Override
-    public void process() {
-        this.state = BoardState.PROCEEDING;
-    }
-
-    @Override
-    public void finish() {
-        this.state = BoardState.FINISHED;
     }
 
     @Override
@@ -89,9 +86,13 @@ public class ChessBoard implements Board {
 
     @Override
     public void move(Position position, Position target) {
+        if(this.state != BoardState.PROCEEDING) throw new IllegalStateException("이미 종료된 게임입니다.");
+
         Piece origin = (Piece)this.getItem(this.position);
 
-        Item<?> temp = this.board[target.getY()][target.getX()];
+        if(!this.isTurn(origin.getTeam())) throw new DifferentTurnException(origin.getTeam());
+
+        Item temp = this.board[target.getY()][target.getX()];
 
         if(!origin.move(target)) throw new DontMoveException();
         if(temp instanceof Piece) ((Piece)temp).destroy();
@@ -103,17 +104,21 @@ public class ChessBoard implements Board {
     }
 
     @Override
-    public boolean isTurn(TeamColor turn) {
-        return this.turn == turn;
-    }
-
-    @Override
     public boolean isExistItem(Position position) {
-        if (position.getX() > this.getPosition().getX() || position.getY() > this.getPosition().getY())
-            throw new OutOfBoardIndexException(position);
+        if(this.state != BoardState.PROCEEDING) throw new IllegalStateException("이미 종료된 게임입니다.");
+        if (position.getX() > this.getPosition().getX() || position.getY() > this.getPosition().getY()) throw new OutOfBoardIndexException(position);
+
         return this.board[position.getY()][position.getX()] != null && !(this.board[position.getY()][position.getX()] instanceof EmptyItem);
     }
 
+    public void finish(TeamColor team) {
+        if(this.state != BoardState.PROCEEDING) throw new IllegalStateException("이미 종료된 게임입니다.");
+        this.winner = TeamColor.valueOf(team.getMultiple()*-1);
+        this.state = BoardState.FINISHED;
+    }
+    private boolean isTurn(TeamColor turn) {
+        return this.turn == turn;
+    }
     private void nextTurn() {
         this.turn = TeamColor.valueOf(1%this.turn.getMultiple());
     }

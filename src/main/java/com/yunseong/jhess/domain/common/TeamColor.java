@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum TeamColor {
 
-    BLACK(1), WHITE(-1);
+    NONE(0), BLACK(1), WHITE(-1);
 
     private final int multiple;
 

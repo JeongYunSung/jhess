@@ -16,11 +16,11 @@ public class OverlapMoveStrategy implements MoveStrategy {
 
     @Override
     public boolean canMove() {
-        Item<?> targetItem = this.board.getItem(this.target);
+        Item targetItem = this.board.getItem(this.target);
 
         if(targetItem instanceof EmptyItem) return true;
 
-        Item<?> item = this.board.getItem(this.position);
+        Item item = this.board.getItem(this.position);
 
         return item.getTeam() != targetItem.getTeam();
     }

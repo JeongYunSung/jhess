@@ -5,6 +5,7 @@ import com.yunseong.jhess.domain.common.Position;
 import com.yunseong.jhess.domain.common.TeamColor;
 import com.yunseong.jhess.domain.item.Event;
 import com.yunseong.jhess.domain.item.EventType;
+import com.yunseong.jhess.domain.item.Item;
 import com.yunseong.jhess.domain.item.MoveStrategy;
 import com.yunseong.jhess.domain.item.piece.event.PieceDestroyedEvent;
 import com.yunseong.jhess.domain.item.piece.event.PieceMovedEvent;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public abstract class Piece implements PieceItem {
+public abstract class Piece implements Item {
 
     @Getter
     private final String name;
@@ -57,7 +58,6 @@ public abstract class Piece implements PieceItem {
 
         notifyEvent(EventType.DESTROYED, new PieceDestroyedEvent(new PieceResponse(this)));
     }
-    @Override
     public void addEventListener(EventType eventType, Consumer<Event<PieceResponse>> event) {
         this.events.put(eventType, event);
     }
