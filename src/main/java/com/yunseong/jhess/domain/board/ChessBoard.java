@@ -41,7 +41,7 @@ public class ChessBoard implements Board {
         }
         for(int y=2;y<board.length-2;y++) {
             for(int x=0;x<board[y].length;x++) {
-                this.board[y][x] = new EmptyItem();
+                this.board[y][x] = EmptyItem.getInstance;
             }
         }
         for(int i=0;i<special.length;i++) {

@@ -16,7 +16,7 @@ public class TestPieceBoard implements Board {
         this.board = new Item[this.size.getY()][this.size.getX()];
         for(int i=0;i<board.length;i++) {
             for(int j=0;j<board[i].length;j++) {
-               board[i][j] = new EmptyItem();
+               board[i][j] = EmptyItem.getInstance;
             }
         }
     }

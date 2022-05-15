@@ -1,9 +1,11 @@
 package com.yunseong.jhess.domain.common;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 @AllArgsConstructor
 public final class Position {
 
